@@ -1,0 +1,16 @@
+{
+  "name": "actlifx",
+  "version": "0.0.0",
+  "description": "command line for controlling lifx bulbs",
+  "main": "actlifx.js",
+  "dependencies": {
+    "lifx": "~0.1.3",
+    "yargs": "~1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node actlifx"
+  },
+  "author": "",
+  "license": "ISC"
+}
