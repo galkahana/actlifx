@@ -78,9 +78,9 @@ for example:
 
     node actlifx color Kitchen in 0xffff 0x00cc 0x0015
 
-Another option, probably better, is to use color names. any CSS name is a good options
+Another option, probably better, is to use color names. any CSS name is a good option
 
     node actlifx color Kitchen in red
-    node actlifx color Entrance in light blue
+    node actlifx color Entrance in lightblue
 
 Note that you can use 'rgb' as an alternative to 'color'. You can use 'hsb' as well which will setup later color values using hsb components.
