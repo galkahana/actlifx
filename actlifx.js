@@ -290,9 +290,9 @@ var verbs =
 							var toIndex = inArgumentsList.indexOf('from')
 							if(toIndex == -1 ||
 								toIndex == inArgumentsList.length-1)
-								return {};
+								return {speed:parseSpeed(inArgumentsList)};
 							else
-								return {stateName:inArgumentsList[toIndex+1]};
+								return {stateName:inArgumentsList[toIndex+1],speed:parseSpeed(inArgumentsList)};
 						},
 		run: function(inLx,inBulb,inArguments,inCallback)
 			{
@@ -313,7 +313,7 @@ var verbs =
 							else
 								inLx.lightsOff(inBulb);
 						}
-						inLx.lightsColour(stateForBulb.hue, stateForBulb.saturation,stateForBulb.brightness,stateForBulb.kelvin,stateForBulb.dim, inBulb);
+						inLx.lightsColour(stateForBulb.hue, stateForBulb.saturation,stateForBulb.brightness,stateForBulb.kelvin,inArguments.speed, inBulb);
 						inCallback();
 					},inCallback);
 
@@ -361,7 +361,7 @@ var verbs =
 		action:'color',
 		parseArguments : function(inArgumentsList)
 						{
-							return {color:parseColorArguments(inArgumentsList)};
+							return {color:parseColorArguments(inArgumentsList),speed:parseSpeed(inArgumentsList)};
 						},
 		run: function(inLx,inBulb,inArguments,inCallback)
 			{
@@ -385,7 +385,7 @@ var verbs =
 				}
 				else
 					rgbColor = inArguments.color;
-				setHSVColor(inLx,inBulb,RGBToHSV(rgbColor[0],rgbColor[1],rgbColor[2]),inCallback);
+				setHSVColor(inLx,inBulb,RGBToHSV(rgbColor[0],rgbColor[1],rgbColor[2]),inArguments.speed,inCallback);
 			},
 		nounStopper: 'in'
 	},
@@ -393,7 +393,7 @@ var verbs =
 		action:'hsb',
 		parseArguments : function(inArgumentsList)
 						{
-							return {color:parseColorArguments(inArgumentsList)};
+							return {color:parseColorArguments(inArgumentsList),speed:parseSpeed(inArgumentsList)};
 						},
 		run: function(inLx,inBulb,inArguments,inCallback)
 			{
@@ -418,7 +418,7 @@ var verbs =
 				}
 				else
 					hsv = inArguments.color;
-				setHSVColor(inLx,inBulb,hsv,inCallback);
+				setHSVColor(inLx,inBulb,hsv,inArguments.speed,inCallback);
 			},
 		nounStopper: 'in',
 	},
@@ -426,7 +426,7 @@ var verbs =
 		action:'darker',
 		parseArguments : function(inArgumentsList)
 						{
-							return  {modifier:parseLightingAdverb(inArgumentsList)};
+							return  {modifier:parseLightingAdverb(inArgumentsList),speed:parseSpeed(inArgumentsList)};
 						},
 		run: function(inLx,inBulb,inArguments,inCallback)
 		{
@@ -446,7 +446,7 @@ var verbs =
 					inLx.lightsOff(inBulb);
 				}
 				else
-					inLx.lightsColour(inBulbState.hue, inBulbState.saturation,illuminationValue,inBulbState.kelvin,0, inBulb);
+					inLx.lightsColour(inBulbState.hue, inBulbState.saturation,illuminationValue,inBulbState.kelvin,inArguments.speed, inBulb);
 				inCallback();
 			},inCallback);
 		}
@@ -455,7 +455,7 @@ var verbs =
 		action:'lighter',
 		parseArguments : function(inArgumentsList)
 						{
-							return  {modifier:parseLightingAdverb(inArgumentsList)};							
+							return  {modifier:parseLightingAdverb(inArgumentsList),speed:parseSpeed(inArgumentsList)};							
 						},
 		run: function(inLx,inBulb,inArguments,inCallback)
 		{
@@ -474,7 +474,7 @@ var verbs =
 					console.log('Turning on bulb',inBulb.name);
 					inLx.lightsOn(inBulb);
 				}
-				inLx.lightsColour(inBulbState.hue, inBulbState.saturation,illuminationValue,inBulbState.kelvin,0, inBulb);
+				inLx.lightsColour(inBulbState.hue, inBulbState.saturation,illuminationValue,inBulbState.kelvin,inArguments.speed, inBulb);
 				inCallback();
 			},inCallback);
 		}
@@ -559,6 +559,17 @@ function parseNumber(inString)
 		return parseInt(inString,16);
 	else
 		return parseInt(inString,10);
+}
+
+function parseSpeed(inArgumentsList,inDefault)
+{
+	if(inArgumentsList.indexOf('quickly') != -1)
+		return 0;
+	else if(inArgumentsList.indexOf('slowly') != -1)
+		return 100000;
+	else
+		return inDefault === undefined ? 50000 : inDefault;
+
 }
 
 function determineAction(inArgumentsList)
@@ -700,7 +711,7 @@ function RGBToHSV(inR,inG,inB)
     return [Math.ceil(h*65535/360),Math.ceil(s*65535),Math.ceil(v*65535)];
 }
 
-function setHSVColor(inLx,inBulb,inHSV,inCallback)
+function setHSVColor(inLx,inBulb,inHSV,inSpeed,inCallback)
 {
 	getBulbState(inLx,inBulb,function(inBulbState)
 	{
@@ -730,7 +741,7 @@ function setHSVColor(inLx,inBulb,inHSV,inCallback)
 			}
 		}
 		else
-			inLx.lightsColour(args[0], args[1],args[2],args[3],0, inBulb);
+			inLx.lightsColour(args[0], args[1],args[2],args[3],inSpeed, inBulb);
 		inCallback();
 	},inCallback);
 }
