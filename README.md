@@ -6,15 +6,15 @@ Program for controlling LIFX bulbs.
 Run with 'node actlifx', and then parameters.    
 The first parameter is verb, or  adverb and then verb. The following verbs are available:
 
-1. **on** - turn bulbs on [done]
-2. **off** - turn bulbs off [done]
+1. **on** - turn bulbs on
+2. **off** - turn bulbs off
 3. **save** - save current state of bulb or bulbs
 4. **restore** - restore a previously saved state of bulb or bulbs
 5. **status** - provide status for bulb or bulbs
 6. **rgb/color** - set color to a bulb or bulbs thrugh RGB color space
 7. **hsb** - set color to a bulb or bulbs through HSB color space
-8. **darker** - reduce a bulb or bulbs illumination [done]
-9. **lighter** - increase a bulb or bulbs illumination [done]
+8. **darker** - reduce a bulb or bulbs illumination
+9. **lighter** - increase a bulb or bulbs illumination
 
 e.g.
 
@@ -78,9 +78,9 @@ for example:
 
     node actlifx color Kitchen in 0xffff 0x00cc 0x0015
 
-Another option, probably better, is to use color names. any CSS name is a good options
+Another option, probably better, is to use color names. any CSS name is a good option
 
     node actlifx color Kitchen in red
-    node actlifx color Entrance in light blue
+    node actlifx color Entrance in lightblue
 
 Note that you can use 'rgb' as an alternative to 'color'. You can use 'hsb' as well which will setup later color values using hsb components.
