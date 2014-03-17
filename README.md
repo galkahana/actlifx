@@ -84,3 +84,9 @@ Another option, probably better, is to use color names. any CSS name is a good o
     node actlifx color Entrance in lightblue
 
 Note that you can use 'rgb' as an alternative to 'color'. You can use 'hsb' as well which will setup later color values using hsb components.
+
+
+Last but not least, you can control the speed of the change in relevant verbs (color, restore, darker, lighter, color, hsb, rgb). write 'quickly' or 'slowly' anywehere in the sentance:
+
+    node actlifx color Kitchen in cyan slowly
+    node actlifx much lighter quickly
