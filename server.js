@@ -7,7 +7,7 @@ app.use(express.bodyParser());
 app.post('/lifx', function(req, res) {
   	res.send('executing action"' + req.body.action + '".');
 
-  	var lifxRunner = new lifxutils.LIFXRunner(req.body.action.split(/[ ]+/));
+  	var lifxRunner = new lifxutils.LIFXRunner(req.body.action.toLowerCase().split(/[ ]+/));
 	lifxRunner.actLIFX();
 });
 
