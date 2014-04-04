@@ -7,7 +7,12 @@ app.use(express.bodyParser());
 app.post('/lifx', function(req, res) {
   	res.send('executing action"' + req.body.action + '".');
 
-  	var lifxRunner = new lifxutils.LIFXRunner(req.body.action.toLowerCase().split(/[ ]+/));
+  	var params = req.body.action.split(/[ ]+/);
+  	
+  	// lowercase the verb which may have got uppercased in stupid mobile browsers
+  	if(params.length > 0) params[0] = params[0].toLowerCase();
+
+  	var lifxRunner = new lifxutils.LIFXRunner(params);
 	lifxRunner.actLIFX();
 });
 

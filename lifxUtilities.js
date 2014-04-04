@@ -566,9 +566,9 @@ function parseSpeed(inArgumentsList,inDefault)
 	if(inArgumentsList.indexOf('quickly') != -1)
 		return 0;
 	else if(inArgumentsList.indexOf('slowly') != -1)
-		return 100000;
+		return 10000;
 	else
-		return inDefault === undefined ? 50000 : inDefault;
+		return inDefault === undefined ? 3000 : inDefault;
 
 }
 
